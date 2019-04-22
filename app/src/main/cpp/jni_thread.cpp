@@ -40,7 +40,7 @@ JNIEXPORT void JNICALL Java_com_demo_lbs_myndk_jni_PThreadJni_nativeInit(
             JNIEnv *env, jobject obj,jobject jobject1){
         LOGD("ni hao a");
         //初始化互斥
-        if (0 != pthread_mutex_init(&        ,NULL)){
+        if (0 != pthread_mutex_init(&mutex,NULL)){
             jclass exceptionClazz = env->FindClass("java/lang/RuntimeException");
             env->ThrowNew(exceptionClazz,"Unable to find metex");
             goto exit;
@@ -128,7 +128,7 @@ JNIEXPORT void JNICALL Java_com_demo_lbs_myndk_jni_PThreadJni_nativeInit(
                 env->ThrowNew(exceptionClazz,"Unable to join thread");
             }else{
                 char message[26];
-                sprintf(message,"Worker %d returned %d",i,result);
+                sprintf(message, "Worker %d returned %ld", i, reinterpret_cast<long>(result));
 
                 jstring messageString = env->NewStringUTF(message);
 
